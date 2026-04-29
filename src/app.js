@@ -12,8 +12,11 @@ import bannerRoutes from './routes/banner.routes.js'
 import socialMediaRoutes from './routes/socialMedia.routes.js'
 import pageRoutes from './routes/page.routes.js'
 import shippingRoutes from './routes/shipping.routes.js'
+
 import analitycRoutes from './routes/analytics.routes.js'
 import seoRoutes from './routes/seo.routes.js'
+import sitemapRoutes from './routes/sitemap.routes.js'
+
 
 const app = express()
 
@@ -39,6 +42,8 @@ app.use('/api/shipping', shippingRoutes)
 app.use('/api/analytics', analitycRoutes)
 // seo
 app.use('/api/seo', seoRoutes)
+// sitemap
+app.use('/', sitemapRoutes)
 
 app.get('/', (req, res) => {
     res.json({message: "Ecommerce API Running"})
