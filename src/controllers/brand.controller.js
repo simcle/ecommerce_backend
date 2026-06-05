@@ -21,7 +21,12 @@ export const update = async (req, res, next) => {
 
 export const list = async (req, res, next) => {
   try {
-    const data = await BrandService.getBrands()
+    const {
+      page,
+      limit,
+      search
+    } = req.query
+    const data = await BrandService.getBrands({page, limit, search})
     res.json({ success: true, data })
   } catch (err) {
     next(err)

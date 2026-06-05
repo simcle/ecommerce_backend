@@ -7,8 +7,7 @@ import { initializeDefaultSocialMedia } from './src/services/socialMediaInitiali
 import { syncServices } from './src/services/biteship.service.js'
 import { startAnalyticsCron } from './src/cron/analytics.cron.js'
 
-const PORT = 3000 || process.env.PORT
-
+const PORT = process.env.PORT || 3000
 await connectDB()
 await initializeSystemPages()
 await initializeDefaultSocialMedia()

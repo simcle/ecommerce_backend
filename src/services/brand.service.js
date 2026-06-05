@@ -23,8 +23,44 @@ export const updateBrand = async (id, payload) => {
   return Brand.findByIdAndUpdate(id, payload, { new: true })
 }
 
-export const getBrands = async () => {
-  return Brand.find({ isActive: true }).sort({ createdAt: -1 })
+export const getBrands = async ({
+  page = 1,
+  limit = 20,
+  search = ''
+}) => {
+  page = Number(page)
+  limit = Number(limit)
+
+  const skip = (page - 1) * limit
+
+  const filter = {
+    isActive: true
+  }
+
+  if (search) {
+    filter.name = {
+      $regex: search,
+      $options: 'i'
+    }
+  }
+  const [brands, total] = await Promise.all([
+    Brand.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit),
+
+    Brand.countDocuments(filter)
+  ])
+
+  return {
+    data: brands,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    }
+  }
 }
 
 export const getBrandById = async (id) => {
